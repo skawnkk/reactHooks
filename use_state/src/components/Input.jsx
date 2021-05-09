@@ -1,13 +1,23 @@
 import { useState } from 'react';
 function Input() {
-	const useInput = (initialValue) => {
+	const useInput = (initialValue, validator) => {
 		const [value, setValue] = useState(initialValue);
 		const handleChange = ({ target }) => {
-			setValue(target.value);
+			let willUpdate = true;
+			if (typeof validator === 'function') {
+				willUpdate = validator(value);
+			}
+			if (willUpdate) {
+				setValue(target.value);
+			}
 		};
 		return { value, handleChange };
 	};
-	const name = useInput('Mr.');
+
+	//유효성검증
+	const maxLen = (value) => value.length <= 10;
+	// const maxLen = (value) => !value.includes('@');
+	const name = useInput('Mr.', maxLen);
 
 	return (
 		<>
@@ -16,8 +26,6 @@ function Input() {
 				value={name.value}
 				onChange={name.handleChange}
 			></input>
-
-			<input placeholder="Name" {...name}></input>
 		</>
 	);
 }
