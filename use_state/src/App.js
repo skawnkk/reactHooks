@@ -6,7 +6,14 @@ import Click from './components/Click';
 import Confirm from './components/Confirm';
 import PreventLeave from './components/PreventLeave';
 import BeforeLeave from './components/BeforeLeave';
+import useAxios from './components/useAxios';
 function App() {
+	const { data, loading, error } = useAxios({
+		url: 'http://13.124.70.38:8080/games',
+	});
+	console.log(
+		`data: ${JSON.stringify(data)}\nloading:${loading}\nerror:${error}`,
+	);
 	return (
 		<>
 			<div>💎Title: 브라우져 타이틀을 봐바요 Loading -> Home!</div>
