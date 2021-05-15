@@ -8,15 +8,21 @@ import PreventLeave from './components/PreventLeave';
 import BeforeLeave from './components/BeforeLeave';
 import useAxios from './components/useAxios';
 import useFadeIn from './components/useFadeIn';
+import useNetwork from './components/useNetwork';
 function App() {
-	const { data, loading, error } = useAxios({
-		url: 'http://13.124.70.38:8080/games',
-	});
-	console.log(
-		`data: ${JSON.stringify(data)}\nloading:${loading}\nerror:${error}`,
-	);
+	// const { data, loading, error } = useAxios({
+	// 	url: 'http://13.124.70.38:8080/games',
+	// });
+	// console.log(
+	// 	`data: ${JSON.stringify(data)}\nloading:${loading}\nerror:${error}`,
+	// );
 	const fadeInH1 = useFadeIn({ delay: 3 });
 	const fadeInP = useFadeIn({ duration: 1 });
+
+	const handleNetworkChange = (online) => {
+		console.log(online ? 'we just went onLine' : 'we are offLine');
+	};
+	const onLine = useNetwork(handleNetworkChange);
 	return (
 		<>
 			<div>💎Title: 브라우져 타이틀을 봐바요 Loading -> Home!</div>
@@ -50,6 +56,8 @@ function App() {
 				<h1 {...fadeInH1}>안녕~?</h1>
 				<p {...fadeInP}>피글렛!</p>
 			</div>
+
+			<div> 💎useNetwork : {onLine ? 'onLine' : 'offLine'}</div>
 		</>
 	);
 }
